@@ -2,6 +2,7 @@ import express from "express"
 import dotenv from "dotenv"
 import { connectDB } from "./config/db.js"
 import userRoute from './routes/userRoute.js'
+import productRoutes from './routes/productRoutes.js'
 import cors from 'cors'
 import cookieParser from "cookie-parser"
 
@@ -18,6 +19,7 @@ app.use(cookieParser()) // it allow you to parse the cookie
 
 
 app.use('/api/auth',userRoute)
+app.use('/api/product',productRoutes)
 app.get("/",(req,res)=>{
     res.send("API working")
 })
