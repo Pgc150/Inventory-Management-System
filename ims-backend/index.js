@@ -11,13 +11,16 @@ dotenv.config()
 connectDB()
 const app = express()
 
-app.use(cors());
+
 app.use(express.json()) //extract json data out of body
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()) // it allow you to parse the cookie
-
-
-
+app.use(cors({
+    origin:"http://localhost:5173 ",
+    credentials:true,
+    // origin:"*",
+    // credentials:false
+}))
 app.use('/api/auth',userRoute)
 app.use('/api/product',productRoutes)
 app.get("/",(req,res)=>{

@@ -1,36 +1,48 @@
-import React from "react";
-import { useState } from "react";
-import { LogIn ,} from "lucide-react";
-import { motion } from "framer-motion";
+import React from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserPlus } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
-
-import { Link, Navigate } from "react-router-dom";
 import { useAuthStore } from '../store/useAuthStore';
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-   const navigate = useNavigate(); 
-   const [showPassword,setShowPassword] = useState(false);
-   const [formData,setFormData] = useState({
+const SignUp = () => {
+    const navigate = useNavigate()
+    const [showPassword,setShowPassword] = useState(false);
+    const [formData,setFormData] = useState({
+        name:"",
         email:"",
         password:"",
     })
 
-    const {login,isLoggingIn} = useAuthStore();
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-       
-        const sucess = await login(formData)
-        if(sucess){
-          navigate("/dashboard");
-      }
+    const {signup,isSigningUp} = useAuthStore();
+    const validateForm = () =>{
+      if (!formData.name.trim()) return toast.error("Full name is required");
+      if (!formData.email.trim()) return toast.error("Email is required");
+      if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
+      if (!formData.password) return toast.error("Password is required");
+      if (formData.password.length < 6) return toast.error("Password must be at least 6 characters");
+
+    return true;
     }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault()
+        const success = validateForm();
+
+        if (success === true) signup(formData);
+        if(success === true){
+          navigate('/login')
+        }
+    }
+    
   return (
-     <div className='min-h-screen w-full flex  bg-gray-50'>
+    <div className='min-h-screen w-full flex  bg-gray-50'>
       {/* left div */}
       <div className="hidden lg:flex lg:w-1/2 h-screen sticky top-0 bg-blue-400 relative  items-center justify-center">
-        <div className="absolute inset-0 bg-linear-to-br from-blue-600 to-blue-900 opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900 opacity-90" />
 
         <div className="relative z-10 text-white p-12 text-center">
           <motion.div
@@ -38,11 +50,11 @@ const Login = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-             <LogIn size={80} className="mx-auto mb-6 text-blue-200" />
-              <h1 className="text-4xl font-bold mb-4">Join Our System</h1>
-              <p className="text-xl text-blue-100 max-w-md mx-auto">
-              Login to access your inventory dashboard and manage stock
-              efficiently.
+            <UserPlus size={80} className="mx-auto mb-6 text-blue-200" />
+            <h1 className="text-4xl font-bold mb-4">Join Our System</h1>
+            <p className="text-xl text-blue-100 max-w-md mx-auto">
+              Create an account to start managing your inventory and tracking
+              stock movements.
             </p>
           </motion.div>
         </div>
@@ -65,15 +77,31 @@ const Login = () => {
     {/* Header */}
     <div className="mb-6 text-center">
       <h2 className="text-2xl font-bold text-gray-800">
-        Login
+        Create Account
       </h2>
       <p className="text-gray-500 mt-1">
-        Enter your credentials to continue
+        Please fill in the details
       </p>
     </div>
 
     {/* FORM */}
     <form onSubmit={handleSubmit} className="space-y-4">
+
+      {/* Name */}
+      <div >
+        <label className="block text-left text-sm text-gray-600 mb-1">
+          Full Name
+        </label>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          value={formData.name}
+          onChange={(e) => setFormData({...formData,name:e.target.value})}
+        />
+      </div>
+
+      {/* Email */}
       <div>
         <label className="block text-left text-sm text-gray-600 mb-1">
           Email Address
@@ -88,8 +116,9 @@ const Login = () => {
       </div>
 
       {/* Password */}
-      <div>
-        <label className="block text-left text-sm text-gray-600 mb-1">
+      
+       <div>
+        <label className="block  text-left text-sm text-gray-600 mb-1">
           Password
         </label>
         <input
@@ -101,22 +130,21 @@ const Login = () => {
         />
       </div>
 
-
       {/* Button */}
       <button
         type="submit"
         className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
       >
-        Login
+        Sign Up
       </button>
 
     </form>
 
     {/* Footer */}
     <p className="text-sm text-center text-gray-500 mt-4">
-     Don’t have an account ?{" "}
+      Already have an account?{" "}
       <span className="text-blue-600 font-semibold cursor-pointer">
-        <Link to='/signup'>Sign up</Link>
+        <Link to='/login'>Login</Link>
       </span>
     </p>
 
@@ -125,7 +153,7 @@ const Login = () => {
 </div>
 
 </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default SignUp
