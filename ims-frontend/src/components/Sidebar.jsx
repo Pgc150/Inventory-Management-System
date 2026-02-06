@@ -10,6 +10,7 @@ import { PictureInPicture2 } from 'lucide-react';
 import { DashBoardPage } from './sidebarcomponents/DashBoardPage';
 import { AddProduct } from './sidebarcomponents/AddProduct';
 import StockDisplay from './sidebarcomponents/StockDisplay';
+import { Navbar } from './Navbar';
 export const Sidebar = () => {
     const {authUser} = useAuthStore()
      const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -29,7 +30,7 @@ export const Sidebar = () => {
             <div className='flex flex-col  gap-10'>
             <div className='flex hover:bg-blue-50 hover:cursor-pointer gap-4'>
             <LayoutDashboard className='ml-5 text-blue-400 w-8 h-8'/>
-            <h1 className='font-bold hover:bg-blue-50 rounded-lg transition-colors'>Dashboard</h1>
+            <Link to='/statics'><h1 className='font-bold hover:bg-blue-50 rounded-lg transition-colors'>Dashboard</h1></Link>
            {/* <DashBoardPage/> */}
         </div>
 
@@ -46,8 +47,7 @@ export const Sidebar = () => {
         </div>
         </div>
         </div>
-        {/* sidebarlist */}
-        
+        {/* <Navbar/> */}
     </div>
   )
 }

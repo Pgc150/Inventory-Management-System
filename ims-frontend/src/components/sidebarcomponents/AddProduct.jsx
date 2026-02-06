@@ -147,7 +147,7 @@ const [formData, setFormData] = useState(initialFormData);
           required
           placeholder="Enter Product Description"
           className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={formData.image}
+          
           onChange={(e) => setFormData({...formData, image:e.target.files[0]})}
         />
         </div>

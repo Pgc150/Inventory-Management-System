@@ -25,7 +25,7 @@ export const Navbar = () => {
     if (!authUser) return null
   return (
     <div>
-        <div className="p-4 border-t border-gray-200">
+        <div className="p-4 ">
         <div className="flex  gap-3 px-4 py-3 mb-2 justify-end">
             <div className="w-10 h-10 text-xl rounded-full bg-blue-100 flex items-center justify-center text-brand-700 font-bold hover:cursor-pointer"
              onClick={() => setShowSignOut(!showSignOut)}

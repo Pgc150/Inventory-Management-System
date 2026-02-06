@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard';
 import { AddProduct } from './components/sidebarcomponents/AddProduct';
 import StockDisplay from './components/sidebarcomponents/StockDisplay';
 import Home from './pages/Home';
+import { DashBoardPage } from './components/sidebarcomponents/DashBoardPage';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -16,20 +17,15 @@ function App() {
   return (
     <>
       <Toaster position='top-right' reverseOrder={false}/>
-      
-      {/* <Routes>
-        <Route path='/signup' element={<SignUp/>}/>
-      </Routes> */}
-  
+        {/* <Home/> */}
         <Routes>
         <Route path='/signup' element={<SignUp/>}></Route>
         <Route path='/login' element={<Login/>}/>
         <Route path='/dashboard' element={<Dashboard/>}/>
         <Route path='/add' element={<AddProduct/>}/>
         <Route path='/display' element={<StockDisplay/>}/>
-      </Routes>
-    
-      
+        <Route path='/statics' element={<DashBoardPage/>}/>
+      </Routes>  
     </>
   )
 }
