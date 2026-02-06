@@ -91,3 +91,10 @@ export const logout = (req,res) => {
         res.status(500).json({message:"Internal Server Error"})
     }
 }
+
+export const getUser = (req,res) => {
+    res.status(200).json(req.user)
+    console.log("Error is check auth")
+}
+
+

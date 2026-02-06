@@ -7,18 +7,20 @@ const SearchBar = () => {
          <div className=''>
           <form>
             <div className='flex flex-row gap-5 items-center justify-center'>
-                <div>
+                <div className='bg-blue-50 p-4 rounded-2xl'>
                   <input 
+
                   type='text'
                   placeholder='search by name'
-                  className='bg-blue-50 p-4 rounded-2xl text-gray-100'
+                  className=''
                   />
                 </div>
 
-                 <div className='flex'>
+                 <div className='flex bg-blue-50 p-4 rounded-2xl'>
+                  
                     <select 
-                    className='bg-blue-50 p-4 rounded-2xl'
-                    >
+                    className=''
+                    > 
                       <option>Select</option>
                       <option>Electronics</option>
                       <option>Clothing</option>
@@ -27,9 +29,10 @@ const SearchBar = () => {
                     </select>
                  </div>
                  <div>
+                  
                   <input 
                    type='number'
-                   placeholder='10'
+                   placeholder='Price'
                    className='bg-blue-50 p-4 rounded-2xl'
                   />
                  </div>
@@ -38,6 +41,7 @@ const SearchBar = () => {
                     <Search/>
                     
                  </div>
+                 
             </div>
           </form>
          </div>

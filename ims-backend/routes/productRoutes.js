@@ -6,11 +6,11 @@ import { protectRoute } from "../middleware/authMiddleware.js";
 const router = express.Router()
 
 router.post('/add',protectRoute,upload.single('image'), createProduct)
-router.get('/list',getProducts)
+router.get('/list',protectRoute,getProducts)
 router.get('/:id',getProductById)
 
 router.put('/update/:id',protectRoute,upload.single('image'),updateProduct)
 
-router.delete('/delete/:id',delteProduct)
+router.delete('/delete/:id',protectRoute,delteProduct)
 
 export default router

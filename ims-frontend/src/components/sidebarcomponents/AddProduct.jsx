@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useProductStore } from '../../store/useProductStore'
 import toast from 'react-hot-toast'
+import { X } from 'lucide-react';
 
 export const AddProduct = () => {
   const {add,isAdded} = useProductStore()
@@ -26,7 +27,6 @@ const [formData, setFormData] = useState(initialFormData);
     }
 
   const handleSubmit = async(e) => {
-      
       e.preventDefault()
       validateForm()
        await add(formData)
@@ -52,6 +52,7 @@ const [formData, setFormData] = useState(initialFormData);
       <p className="text-gray-500 mt-1">
         Add Product
       </p>
+      <Link to='/dashboard'><X className=''/></Link>
     </div>
 
     {/* FORM */}
@@ -59,6 +60,7 @@ const [formData, setFormData] = useState(initialFormData);
      
       <main className=''>
         <div>
+          
          <label className="block text-left text-sm text-gray-600 mb-1">
           Name
          </label>
@@ -146,7 +148,7 @@ const [formData, setFormData] = useState(initialFormData);
           placeholder="Enter Product Description"
           className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.image}
-          onChange={(e) => setFormData({...formData, image:e.target.value})}
+          onChange={(e) => setFormData({...formData, image:e.target.files[0]})}
         />
         </div>
 

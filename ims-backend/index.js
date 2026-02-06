@@ -13,7 +13,7 @@ const app = express()
 
 
 app.use(express.json()) //extract json data out of body
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()) // it allow you to parse the cookie
 app.use(cors({
     origin:"http://localhost:5173 ",

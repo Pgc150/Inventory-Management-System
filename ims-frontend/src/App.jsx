@@ -8,6 +8,7 @@ import SignUp from './pages/SignUp';
 import Dashboard from './pages/Dashboard';
 import { AddProduct } from './components/sidebarcomponents/AddProduct';
 import StockDisplay from './components/sidebarcomponents/StockDisplay';
+import Home from './pages/Home';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,6 +16,7 @@ function App() {
   return (
     <>
       <Toaster position='top-right' reverseOrder={false}/>
+      
       {/* <Routes>
         <Route path='/signup' element={<SignUp/>}/>
       </Routes> */}

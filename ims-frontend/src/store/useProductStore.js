@@ -3,11 +3,22 @@ import toast from "react-hot-toast";
 import { productInstance } from "../lib/axios";
 
 export const useProductStore = create ((set,get)=> ({
-       productData : null,
-       productList:null,
+       productList:[],
        isAdded : false ,
        isUpdated:false,
        isDeleted:false,
+       isLoading:false,
+       isUpdating:false,
+
+       filters :{
+           search:"",
+           category:"",
+           sortBy:"createdAt",
+           order:"desc",
+       },
+
+       setFilters:(newFilters) => 
+        set({filters:{...get().filters,...newFilters}}),
 
        add : async(data) =>{
           set({isAdded:true})
@@ -26,17 +37,65 @@ export const useProductStore = create ((set,get)=> ({
 
        },
 
-       delete: async(id) =>{
-           
+       deleteProduct: async(id) =>{
+            set({isDeleted:true})
+            try {
+              const res = await productInstance.delete(`/product/delete/${id}`)
+              set((state)=>({
+                   productList: state.productList.filter(
+                    (product) => product._id !== id
+                   )
+              }))
+              toast.success("Product Deleted")
+            } catch (error) {
+              console.log("Error in deleting Product",error)
+              toast.error(error.response.data.message || "Failed to delte product")
+            }
        },
+
        list: async() => {
+          set({isLoading:true})
+          const {search,category,sortBy,order} = get().filters;
           try {
-            const res = await productInstance.get('/product/list')
-            set({productList:res.data})
+            const res = await productInstance.get('/product/list',{
+              params:{search,category,sortBy,order}
+            })
+            console.log("list api response", res.data);
+
+            set({productList:res.data.data})
           } catch (error) {
             console.log("Error in list Product",error)
-            toast.error(error.reponse.data)
+            toast.error(error.response.data)
+          }finally{
+            set({isLoading: false})
           }
+       },
+
+       updateProduct : async (id,updatedData) =>{
+         set({isUpdating:true})
+
+         try {
+           const res = await productInstance.put(
+            `/product/update/${id}`,
+            updatedData
+           )
+
+           set((state) => ({
+             productList:state.productList.map((product)=>
+              product._id === id
+              ? res.data.data  // updated product from backend
+               : product
+            )
+           }))
+           toast.success("Product updated sucessfully")
+         } catch (error) {
+            console.log("Error updating product",error)
+             toast.error(
+              error.response?.data?.message || "Failed to update product"
+            );
+         } finally {
+           set({isUpdating:false})
+         }
        }
 
 }))

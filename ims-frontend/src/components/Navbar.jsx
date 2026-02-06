@@ -1,15 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore'
 import { LogOut } from 'lucide-react'
 import { useState } from 'react'
 export const Navbar = () => {
-    const {authUser,logout,isLoggingOut} = useAuthStore()
+    const {authUser,checkAuth,logout,isLoggingOut,isLoggingIn,isCheckingAuth} = useAuthStore()
     const [showSignOut, setShowSignOut] = useState(false);
     const navigate = useNavigate()
-    if(isLoggingOut){
+
+    useEffect(() => {
+        checkAuth()
+    },[])
+
+    //  if(isLoggingOut){
+    //     navigate('/login')
+    // }
+
+    useEffect(() => {
+      if(!isCheckingAuth && !authUser){
         navigate('/login')
-    }
+      }
+    },[authUser,navigate])
+
+    if (!authUser) return null
   return (
     <div>
         <div className="p-4 border-t border-gray-200">
@@ -19,7 +32,7 @@ export const Navbar = () => {
             >
                  {authUser?.name?.charAt(0).toUpperCase()}
             </div>
-            <div className=" mt-2 min-w-0">
+            <div className=" mt-2 min-w-0 hover:bg-blue-50 cursor-pointer">
                 <p className="text-xl font-semibold text-gray-900 truncate">{authUser?.name}</p>
             </div>
         </div>

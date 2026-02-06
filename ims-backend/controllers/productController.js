@@ -51,7 +51,7 @@ export const createProduct = async (req,res) => {
             category,
             image: imageUrl,
             imagePublicId: imagePublicId,
-            user: req.user
+            user: req.user._id
         })
 
         await product.save()
@@ -82,7 +82,8 @@ export const getProducts = async (req,res) => {
     try {
         const {category ,sortBy='createdAt',order = 'desc',search} = req.query
 
-        let query = {}
+        let query = {user: req.user}  // gives only logged in user's data
+        // let query = {user: req.user._id}
         
         // filter by category
         if(category && ['Electronics','Clothing','Food','Groceries'].includes(category)){
