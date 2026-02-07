@@ -1,9 +1,9 @@
-Inventory Management System
+# Inventory Management System
 
 A full-stack Inventory Management System built with React.js, Express.js, Tailwind CSS, and MongoDB.
 This project enables users to efficiently manage products with features like authentication, CRUD operations, search/filter/sort, and a polished, responsive UI.
 
-🌟 Features
+# 🌟 Features
 
 User Authentication
 
