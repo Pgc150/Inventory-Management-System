@@ -28,8 +28,10 @@ const [formData, setFormData] = useState(initialFormData);
 
   const handleSubmit = async(e) => {
       e.preventDefault()
-      validateForm()
-       await add(formData)
+      const sucess = validateForm()
+      if(sucess){ 
+        await add(formData)
+      }
       setFormData(initialFormData);
   }
   return (
@@ -38,22 +40,26 @@ const [formData, setFormData] = useState(initialFormData);
        <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
 
   <motion.div
-    initial={{ opacity: 0, x: 30 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
+    initial={{ y: 16, opacity: 0 }}
+    animate={{ y: 0, opacity: 1 }}
+    transition={{ duration: 0.35, ease:"easeOut" }}
     className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
   >
 
     {/* Header */}
-    <div className="mb-6 text-center">
-      <h2 className="text-2xl font-bold text-gray-800">
-        Add
-      </h2>
-      <p className="text-gray-500 mt-1">
-        Add Product
-      </p>
-      <Link to='/dashboard'><X className=''/></Link>
-    </div>
+       <div className="mb-6 w-full border-b border-gray-200 pb-3 relative">
+ 
+  <div className="flex items-center justify-center">
+    
+    <h2 className="text-xl font-bold text-gray-600">
+      Add
+    </h2>
+  </div>
+  <p className="text-gray-500 mt-1 text-center">
+    Add Product
+  </p>
+</div>
+
 
     {/* FORM */}
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -157,16 +163,16 @@ const [formData, setFormData] = useState(initialFormData);
       <div className='flex gap-4'>
         <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+        className="w-full bg-blue-300 hover:bg-blue-500 text-white py-2 rounded-lg font-semibold transition"
       >
         Add
       </button>
 
       <button
        
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+        className="w-full bg-red-300 hover:bg-red-500 transform-3d text-white py-2 rounded-lg font-semibold transition"
       >
-        <Link to='/dashboard'>Back</Link>
+        <Link to='/dashboard'>Cancel</Link>
       </button>
       </div>
 

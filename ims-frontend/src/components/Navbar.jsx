@@ -12,10 +12,6 @@ export const Navbar = () => {
         checkAuth()
     },[])
 
-    //  if(isLoggingOut){
-    //     navigate('/login')
-    // }
-
     useEffect(() => {
       if(!isCheckingAuth && !authUser){
         navigate('/login')
@@ -25,17 +21,18 @@ export const Navbar = () => {
     if (!authUser) return null
   return (
     <div>
-        <div className="p-4 ">
+        <div className="p-4  text-gray-600">
         <div className="flex  gap-3 px-4 py-3 mb-2 justify-end">
-            <div className="w-10 h-10 text-xl rounded-full bg-blue-100 flex items-center justify-center text-brand-700 font-bold hover:cursor-pointer"
+            <div className="w-10 h-10 text-xl rounded-full bg-blue-100 flex items-center justify-center text-gray-600 font-bold hover:cursor-pointer"
              onClick={() => setShowSignOut(!showSignOut)}
             >
                  {authUser?.name?.charAt(0).toUpperCase()}
             </div>
             <div className=" mt-2 min-w-0 hover:bg-blue-50 cursor-pointer">
-                <p className="text-xl font-semibold text-gray-900 truncate">{authUser?.name}</p>
+                <p className="text-xl font-semibold text-gray-600 truncate">{authUser?.name}</p>
             </div>
-        </div>
+          </div>
+          <p>{authUser?.email}</p>
 
         {showSignOut && (
           <button 

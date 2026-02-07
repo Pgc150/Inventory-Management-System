@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useProductStore } from "../store/useProductStore";
 import { useAuthStore } from "../store/useAuthStore";
 import { EditProduct } from "./sidebarcomponents/EditProduct";
-
+import { motion } from "framer-motion";
 const ProductList = () => {
 
   const [selectedProduct,setSelectedProduct] = useState(null)
@@ -29,10 +29,15 @@ const ProductList = () => {
 
   
   return (
-    <div className="p-4">
+    <motion.div
+    initial={{ y: 16, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.35, ease:"easeOut" }}
+    >
+    <div className="p-4 text-gray-600">
       {/* Header */}
       <div className="flex gap-10 items-center">
-        <h2 className="text-2xl font-bold mb-4">Product List</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-600">Product List</h2>
         <Link
           to="/add"
           className="bg-blue-500 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition mb-5"
@@ -54,7 +59,7 @@ const ProductList = () => {
         {/* Category Filter */}
         <select
           onChange={(e) => setFilters({ category: e.target.value })}
-          className="border px-3 py-2 rounded"
+          className="border px-3 py-2 rounded text-gray-600"
         >
           <option value="">All Categories</option>
           <option value="Electronics">Electronics</option>
@@ -79,16 +84,16 @@ const ProductList = () => {
 
         <button
           onClick={list}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 hover:cursor-pointer"
         >
           Apply
         </button>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto rounded-xl hover:cursor-pointer">
         <table className="min-w-full">
-          <thead className="bg-blue-100">
+          <thead className="bg-blue-100 hover:bg-blue-200">
             <tr>
               <th className="p-2">Name</th>
               <th className="p-2">Category</th>
@@ -107,7 +112,7 @@ const ProductList = () => {
               </tr>
             ) : productList.length > 0 ? (
               productList.map((product) => (
-                <tr key={product._id} className="text-center">
+                <tr key={product._id} className="text-center hover:bg-blue-100">
                   <td className="p-2">{product.name}</td>
                   <td className="p-2">{product.category}</td>
                   <td className="p-2">{product.price}</td>
@@ -134,12 +139,12 @@ const ProductList = () => {
                        setSelectedProduct(product);
                        setIsEditOpen(true);
                      }}
-                     className="bg-green-200 px-3 py-1 rounded">
+                     className="bg-green-200 text-gray px-3 py-1 rounded hover:bg-green-300">
                       Edit
                     </button>
                     <button 
                      onClick={() => deleteProduct(product._id)}
-                     className="bg-red-300 text-white px-3 py-1 rounded">
+                     className="bg-red-300 text-white px-3 py-1 rounded hover:bg-red-400">
                       Delete
                     </button>
                   </td>
@@ -161,6 +166,7 @@ const ProductList = () => {
       />
       </div>
     </div>
+    </motion.div>
   );
 };
 

@@ -7,10 +7,10 @@ import { Link } from 'react-router-dom'
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare, User } from "lucide-react";
 import { useAuthStore } from '../store/useAuthStore';
 import toast from "react-hot-toast";
+import ThemeToggle from '../components/ThemeToggle'
 
 const SignUp = () => {
     const navigate = useNavigate()
-    const [showPassword,setShowPassword] = useState(false);
     const [formData,setFormData] = useState({
         name:"",
         email:"",
@@ -39,7 +39,11 @@ const SignUp = () => {
     }
     
   return (
-    <div className='min-h-screen w-full flex  bg-gray-50'>
+    <div className='min-h-screen w-full flex  bg-gray-50 dark:bg-gray-900'>
+      <div className="absolute top-6 right-6">
+        <ThemeToggle />
+       </div>
+
       {/* left div */}
       <div className="hidden lg:flex lg:w-1/2 h-screen sticky top-0 bg-blue-400 relative  items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-blue-900 opacity-90" />

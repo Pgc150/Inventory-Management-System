@@ -8,5 +8,4 @@ router.post('/login',login)
 router.post('/logout',logout)
 router.get('/user',protectRoute,getUser)
 
-// router.put('/update-profile',protectRoute,updateProfile)
 export default router
