@@ -48,11 +48,11 @@ Smooth animations with Framer Motion
 
 # Tech Stack
 
-Frontend: React.js, Tailwind CSS, React Router, Framer Motion
+ #  Frontend: React.js, Tailwind CSS, React Router, Framer Motion
 
-Backend: Node.js, Express.js, JWT Authentication
+# Backend: Node.js, Express.js, JWT Authentication
 
-Database: MongoDB Atlas 
+# Database: MongoDB Atlas 
 Setup Instructions
 
  # Prerequisite
