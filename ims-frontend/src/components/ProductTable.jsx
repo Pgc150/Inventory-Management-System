@@ -4,11 +4,16 @@ import { useProductStore } from "../store/useProductStore";
 import { useAuthStore } from "../store/useAuthStore";
 import { EditProduct } from "./sidebarcomponents/EditProduct";
 import { motion } from "framer-motion";
+import { Download } from "lucide-react";
+import DownloadCSVButton from "./DownloadCSVButton";
+import { AddProduct } from "./sidebarcomponents/AddProduct";
+import { OctagonAlert } from 'lucide-react';
+
 const ProductList = () => {
 
   const [selectedProduct,setSelectedProduct] = useState(null)
   const[isEditOpen,setIsEditOpen] = useState(false)
-
+  const[isAddOpen,setIsAddOpen] = useState(false)
   const {
     productList,
     list,
@@ -38,12 +43,12 @@ const ProductList = () => {
       {/* Header */}
       <div className="flex gap-10 items-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-600">Product List</h2>
-        <Link
-          to="/add"
+        <button
+          onClick={()=>setIsAddOpen(true)}
           className="bg-blue-500 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition mb-5"
         >
           + Add
-        </Link>
+        </button>
       </div>
 
       {/* Controls */}
@@ -88,6 +93,7 @@ const ProductList = () => {
         >
           Apply
         </button>
+        <DownloadCSVButton/>
       </div>
 
       {/* Table */}
@@ -127,8 +133,8 @@ const ProductList = () => {
                   >
                     {product.quantity}
                     {product.quantity < 10 && (
-                      <span className="block text-xs font-normal">
-                        ⚠ Low stock
+                      <span className="flex justify-center gap-2 text-xs font-normal">
+                        <OctagonAlert/>Low stock
                       </span>
                     )}
                   </td>
@@ -163,6 +169,11 @@ const ProductList = () => {
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
         product={selectedProduct}
+      />
+
+      <AddProduct
+      isAddOpen={isAddOpen}
+      onClose={()=>setIsAddOpen(false)}
       />
       </div>
     </div>

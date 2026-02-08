@@ -9,6 +9,8 @@ export const useProductStore = create ((set,get)=> ({
        isDeleted:false,
        isLoading:false,
        isUpdating:false,
+       isDownloading: false,
+       csvData:[],
        
        filters :{
            search:"",
@@ -60,7 +62,7 @@ export const useProductStore = create ((set,get)=> ({
             const res = await productInstance.get('/product/list',{
               params:{search,category,sortBy,order}
             })
-            console.log("list api response", res.data);
+            console.log("list api response", res.data.data);
 
             set({productList:res.data.data})
           } catch (error) {
@@ -96,6 +98,33 @@ export const useProductStore = create ((set,get)=> ({
          } finally {
            set({isUpdating:false})
          }
-       }
+       },
 
+       dowanloadCSV: async () =>{
+          set({isDownloading:true})
+          try {
+            const res = await productInstance.get('/product/export/csv',{
+              responseType:"blob",
+              withCredentials:true,
+            })
+            set({csvData:res.data})
+
+            const blob = new Blob([res.data],{type:"text/csv"})
+            const link = document.createElement("a")
+
+            link.href = URL.createObjectURL(blob)
+            link.download = "my-products.csv" // set the filename
+
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            
+            URL.revokeObjectURL(link.href)  
+          } catch (error) {
+            console.log("CSV download error",error)
+            toast.error("Error dowanloading csv")
+          } finally {
+            set({isDownloading: false})
+          }
+       }
 }))

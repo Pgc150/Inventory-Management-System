@@ -3,12 +3,10 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom'
 import { useAuthStore } from '../store/useAuthStore'
-import {  Home, Package, PieChart, Plus, ShoppingCart } from 'lucide-react';
+import {  Home, Package, PieChart, Plus, ShoppingCart ,Boxes} from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { LayoutDashboard } from 'lucide-react';
-import { CopyPlus } from 'lucide-react';
-import { PictureInPicture2 } from 'lucide-react';
-import { DashBoardPage } from './sidebarcomponents/DashBoardPage';
+import { BarChart3 } from 'lucide-react'; 
+
 import { AddProduct } from './sidebarcomponents/AddProduct';
 import StockDisplay from './sidebarcomponents/StockDisplay';
 import { Navbar } from './Navbar';
@@ -37,9 +35,9 @@ export const Sidebar = (onClose, showClose = false) => {
       {/* 🧾 Scrollable Menu */}
       <nav className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar">
         <Item to="/dashboard" icon={<Home className="w-5 h-5 "/>} label="Dashboard" onClose={onClose} />
-        <Item to="/add" icon={<Plus className='w-5 h-5 '/>} label=" Add Products" onClose={onClose} />
-        <Item to="/table" icon={<ShoppingCart className='w-5 h-5'/>} label="Stock Display" onClose={onClose} />
-        
+        <Item to="/table" icon={<Boxes className='w-5 h-5'/>} label="Stock Display" onClose={onClose} />
+        <Item to="/productpiechart" icon={<BarChart3 className='w-5 h-5'/>} label="Stock Analysis" onClose={onClose} />
+
         {/* add more items to see scrollbar */}
       </nav>
 

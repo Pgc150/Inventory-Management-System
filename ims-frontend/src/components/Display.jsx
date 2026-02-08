@@ -26,6 +26,16 @@ export const Display = () => {
       color: "border-green-200",
     },
   ];
+
+
+  const totalInventoryValue = productList.reduce(
+    (acc,p) => acc + p.price * p.quantity,
+    0
+  )
+
+  const totalProductCount = productList.length
+
+  const lowStockCount = productList.filter(p => p.quantity <= 10).length
   return (
     <motion.div
       initial={{ y: 16, opacity: 0 }}
@@ -49,7 +59,7 @@ export const Display = () => {
             {card.icon}
             <h2 className=" font-bold">{card.title}</h2>
           </div>
-          <p className="text-xl font-bold">{card.value}</p>
+          <p className="text-xl font-bold">{lowStockCount}</p>
         </div>
       ))}
     </div>

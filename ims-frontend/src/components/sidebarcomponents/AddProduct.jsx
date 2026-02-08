@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion ,AnimatePresence} from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useProductStore } from '../../store/useProductStore'
 import toast from 'react-hot-toast'
-import { X } from 'lucide-react';
+import { X,Loader2 } from 'lucide-react';
 
-export const AddProduct = () => {
+export const AddProduct = ({isAddOpen,onClose}) => {
   const {add,isAdded} = useProductStore()
+  const [isLoading, setIsLoading] = useState(false)
   const initialFormData = {
   name: "",
   description: "",
@@ -29,37 +30,49 @@ const [formData, setFormData] = useState(initialFormData);
   const handleSubmit = async(e) => {
       e.preventDefault()
       const sucess = validateForm()
-      if(sucess){ 
-        await add(formData)
-      }
-      setFormData(initialFormData);
+      if(!sucess) return
+      try {
+        setIsLoading(true);
+        await add(formData);
+        setFormData(initialFormData);
+        onClose();
+      } catch (err) {
+        toast.error("Failed to add product");
+      } finally {
+        setIsLoading(false);
+       }
+      
   }
-  return (
-    <div className='bg-gradient-to-br from-blue-50 to-gray-50'>
-      <div className='top-0 flex justify-center  '>
-       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
 
-  <motion.div
-    initial={{ y: 16, opacity: 0 }}
-    animate={{ y: 0, opacity: 1 }}
-    transition={{ duration: 0.35, ease:"easeOut" }}
-    className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
-  >
+
+  return (
+
+  <AnimatePresence>
+    {isAddOpen && (
+      <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
+          >
 
     {/* Header */}
-       <div className="mb-6 w-full border-b border-gray-200 pb-3 relative">
- 
-  <div className="flex items-center justify-center">
-    
-    <h2 className="text-xl font-bold text-gray-600">
-      Add
-    </h2>
-  </div>
-  <p className="text-gray-500 mt-1 text-center">
-    Add Product
-  </p>
-</div>
-
+      <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Add Product</h2>
+            <button onClick={onClose}>
+              <X />
+            </button>
+          </div>
+   
 
     {/* FORM */}
     <form onSubmit={handleSubmit} className="space-y-4">
@@ -160,29 +173,43 @@ const [formData, setFormData] = useState(initialFormData);
 
       </main>
 
-      <div className='flex gap-4'>
+      <div className='flex gap-4 pt-2'>
         <button
         type="submit"
-        className="w-full bg-blue-300 hover:bg-blue-500 text-white py-2 rounded-lg font-semibold transition"
+        disabled={isLoading}
+        className={`w-full py-2 rounded-lg font-semibold transition ${
+          isLoading ? "bg-blue-300 cursor cursor-not-allowed"
+          : "bg-blue-500 hover:bg-blue-600 text-white"
+        }`}
       >
-        Add
+        {isLoading ? (
+          <span className='flex items-center justify-center gap-2'>
+            <Loader2 className='w-4 h-4 animate-spin'/>
+            Adding...
+          </span>
+        ):(
+          "Add"
+        )}
       </button>
 
       <button
-       
+        type="button"
+        disabled={isLoading}
+        onClick={onClose}
         className="w-full bg-red-300 hover:bg-red-500 transform-3d text-white py-2 rounded-lg font-semibold transition"
       >
-        <Link to='/dashboard'>Cancel</Link>
+        Cancel
       </button>
       </div>
 
     </form>
 
-  </motion.div>
-
-</div>
-    </div>
-    </div>
+  
+     </motion.div>
+    </motion.div>
+    )}
+  
+  </AnimatePresence>  
   )
 }
 
