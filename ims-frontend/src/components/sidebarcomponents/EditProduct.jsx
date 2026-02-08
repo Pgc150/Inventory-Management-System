@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { useProductStore } from "../../store/useProductStore";
+import { Loader2 } from "lucide-react";
 
 export const EditProduct = ({ isOpen, onClose, product }) => {
   const { updateProduct, isUpdating } = useProductStore();
@@ -54,7 +55,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Edit Product</h2>
             <button onClick={onClose}>
-              <X />
+              <X  className="hover:cursor-pointer"/>
             </button>
           </div>
 
@@ -120,13 +121,21 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
               onChange={(e) =>
                 setFormData({ ...formData, image: e.target.files[0] })
               }
+              className="w-full border px-3 py-2 rounded mt-2 mb-2"
             />
 
             <button
               disabled={isUpdating}
               className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
             >
-              {isUpdating ? "Updating..." : "Update Product"}
+              {isUpdating ? (
+                <span className='flex items-center justify-center gap-2'>
+                  <Loader2 className='w-4 h-4 animate-spin'/>
+                     Updating...
+                </span>
+                ):(
+                "Update"
+              )}
             </button>
           </form>
         </motion.div>

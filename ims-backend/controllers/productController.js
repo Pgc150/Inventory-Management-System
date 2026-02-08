@@ -1,6 +1,6 @@
 import Product from '../models/productModel.js'
 import {cloudinary} from '../config/cloudinary.js'
-
+import { Parser } from 'json2csv';
 
 const deleteImage = async (publicId) => {
     if(!publicId) return;
@@ -119,7 +119,7 @@ export const getProducts = async (req,res) => {
     }
 }
 
-// get single product
+// get single product 
 export const getProductById = async (req,res) => {
     try {
         const product = await Product.findById(req.params.id)
@@ -257,6 +257,24 @@ export const delteProduct = async (req,res) => {
             sucess: false,
             message: 'Server error'
         })
+    }
+}
+
+export const exportToCSV = async(req,res) => {
+    try {
+        const products = await Product.find({user:req.user.id}) // fetch only logged in user's data
+        .select("name price quantity category")
+        .lean()
+
+        const parser = new Parser()
+        const csv = parser.parse(products)
+
+        res.header("Content-type","text/csv")
+        res.attachment("my-products.csv")
+        res.send(csv)
+    } catch (error) {
+        console.error("Error in export csv",error)
+        res.status(400).json({message:"Server Error"})
     }
 }
 

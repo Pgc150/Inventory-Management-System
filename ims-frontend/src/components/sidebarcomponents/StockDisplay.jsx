@@ -1,5 +1,4 @@
 import React from 'react'
-import SearchBar from '../SearchBar'
 import { CirclePile } from 'lucide-react';
 import ProductTable from '../ProductTable'
 import { Link } from 'react-router-dom'
@@ -18,10 +17,6 @@ function StockDisplay() {
     Back
   </Link>
 </div>
-
-      {/* Search bar */}
-      {/* <SearchBar/> */}
-
       <ProductTable/>
     </div>
   )

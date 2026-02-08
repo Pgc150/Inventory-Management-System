@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion ,AnimatePresence} from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useProductStore } from '../../store/useProductStore'
 import toast from 'react-hot-toast'
-import { X } from 'lucide-react';
+import { X,Loader2 } from 'lucide-react';
 
-export const AddProduct = () => {
+export const AddProduct = ({isAddOpen,onClose}) => {
   const {add,isAdded} = useProductStore()
+  const [isLoading, setIsLoading] = useState(false)
   const initialFormData = {
   name: "",
   description: "",
@@ -28,40 +29,57 @@ const [formData, setFormData] = useState(initialFormData);
 
   const handleSubmit = async(e) => {
       e.preventDefault()
-      validateForm()
-       await add(formData)
-      setFormData(initialFormData);
+      const sucess = validateForm()
+      if(!sucess) return
+      try {
+        setIsLoading(true);
+        await add(formData);
+        setFormData(initialFormData);
+        onClose();
+      } catch (err) {
+        toast.error("Failed to add product");
+      } finally {
+        setIsLoading(false);
+       }
+      
   }
+
+
   return (
-    <div className='bg-gradient-to-br from-blue-50 to-gray-50'>
-      <div className='top-0 flex justify-center  '>
-       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
 
-  <motion.div
-    initial={{ opacity: 0, x: 30 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
-    className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
-  >
+  <AnimatePresence>
+    {isAddOpen && (
+      <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
+          >
 
-    {/* Header */}
-    <div className="mb-6 text-center">
-      <h2 className="text-2xl font-bold text-gray-800">
-        Add
-      </h2>
-      <p className="text-gray-500 mt-1">
-        Add Product
-      </p>
-      <Link to='/dashboard'><X className=''/></Link>
-    </div>
+    
+      <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold">Add Product</h2>
+            <button onClick={onClose}>
+              <X />
+            </button>
+          </div>
+   
 
-    {/* FORM */}
     <form onSubmit={handleSubmit} className="space-y-4">
      
       <main className=''>
         <div>
           
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Name
          </label>
          <input
@@ -75,7 +93,7 @@ const [formData, setFormData] = useState(initialFormData);
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Description
          </label>
          <textarea
@@ -88,10 +106,10 @@ const [formData, setFormData] = useState(initialFormData);
         />
         </div>
 
-       {/* price & quantity */}
+       
        <div className='flex gap-2'>
           <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Price
          </label>
          <input
@@ -105,7 +123,7 @@ const [formData, setFormData] = useState(initialFormData);
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Quantity
          </label>
          <input
@@ -120,7 +138,7 @@ const [formData, setFormData] = useState(initialFormData);
        </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Category
          </label>
         <select
@@ -139,7 +157,7 @@ const [formData, setFormData] = useState(initialFormData);
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Product Image
          </label>
          <input
@@ -154,29 +172,42 @@ const [formData, setFormData] = useState(initialFormData);
 
       </main>
 
-      <div className='flex gap-4'>
+      <div className='flex gap-4 pt-2'>
         <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+        disabled={isLoading}
+        className={`w-full py-2 rounded-lg font-semibold transition ${
+          isLoading ? "bg-blue-300 cursor cursor-not-allowed"
+          : "bg-blue-500 hover:bg-blue-600 text-white"
+        }`}
       >
-        Add
+        {isLoading ? (
+          <span className='flex items-center justify-center gap-2'>
+            <Loader2 className='w-4 h-4 animate-spin'/>
+            Adding...
+          </span>
+        ):(
+          "Add"
+        )}
       </button>
 
       <button
-       
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+        type="button"
+        disabled={isLoading}
+        onClick={onClose}
+        className="w-full bg-red-300 hover:bg-red-500 transform-3d text-white py-2 rounded-lg font-semibold transition"
       >
-        <Link to='/dashboard'>Back</Link>
+        Cancel
       </button>
       </div>
 
     </form>
 
-  </motion.div>
-
-</div>
-    </div>
-    </div>
+     </motion.div>
+    </motion.div>
+    )}
+  
+  </AnimatePresence>  
   )
 }
 
