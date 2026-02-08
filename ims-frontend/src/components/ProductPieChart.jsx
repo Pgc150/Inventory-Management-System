@@ -68,9 +68,7 @@ const ProductPieChart = () => {
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4 text-left">
               <p className="text-sm text-red-700 font-semibold mb-2">Common issues:</p>
               <ul className="text-sm text-red-600 space-y-1">
-                <li>• Make sure your backend server is running on port 5000</li>
-                <li>• Check if the API endpoint is correct</li>
-                <li>• Verify CORS is enabled on your backend</li>
+                <li>Server Error</li>
               </ul>
             </div>
             <button 
@@ -114,10 +112,10 @@ const ProductPieChart = () => {
       <div className="max-w-6xl mx-auto bg-white rounded-xl shadow-2xl p-6 md:p-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+          <h1 className="text-xl md:text-4xl font-bold text-gray-600 mb-2">
             📊 Product Distribution by Category
           </h1>
-          <p className="text-gray-600">Real-time inventory analysis</p>
+          <p className="text-gray-500">Real-time inventory analysis</p>
         </div>
 
         {/* Statistics Cards */}
@@ -190,7 +188,7 @@ const ProductPieChart = () => {
 
         {/* Category Breakdown */}
         <div className="mb-8">
-          <h2 className="text-2xl font-semibold mb-6 text-gray-700 flex items-center">
+          <h2 className="text-2xl font-semibold mb-6 text-gray-600 flex items-center">
             <span className="bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg px-3 py-1 mr-3 text-lg">
               📦
             </span>

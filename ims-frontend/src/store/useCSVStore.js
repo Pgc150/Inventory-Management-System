@@ -18,12 +18,7 @@ const useCSVStore = create((set) => ({
           'Content-Type': 'text/csv',
         },
       });
-      
-    //   if (!response.ok) {
-    //     throw new Error(`HTTP error! status: ${response.status}`);
-    //   }
-
-      // Get CSV text from response
+    
       const csvText = response.data;
       
       // Parse CSV

@@ -40,31 +40,27 @@ const ProductList = () => {
       transition={{ duration: 0.35, ease:"easeOut" }}
     >
     <div className="p-4 text-gray-600">
-      {/* Header */}
       <div className="flex gap-10 items-center">
         <h2 className="text-2xl font-bold mb-4 text-gray-600">Product List</h2>
         <button
           onClick={()=>setIsAddOpen(true)}
-          className="bg-blue-500 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition mb-5"
+          className="bg-blue-500 hover:bg-blue-700 shadow-xl border border-blue-200  text-white px-6 py-2 rounded-lg font-semibold transition mb-5"
         >
           + Add
         </button>
       </div>
-
-      {/* Controls */}
+ 
       <div className="flex flex-wrap gap-4 mb-4 items-center">
-        {/* Search */}
         <input
           type="text"
           placeholder="Search by name or description"
           onChange={(e) => setFilters({ search: e.target.value })}
-          className="border px-3 py-2 rounded w-64"
+          className="border border-gray-200 shadow-xl px-3 py-2 rounded w-64"
         />
 
-        {/* Category Filter */}
         <select
           onChange={(e) => setFilters({ category: e.target.value })}
-          className="border px-3 py-2 rounded text-gray-600"
+          className="border border-gray-200 shadow-xl  px-3 py-2  rounded text-gray-600"
         >
           <option value="">All Categories</option>
           <option value="Electronics">Electronics</option>
@@ -73,14 +69,13 @@ const ProductList = () => {
           <option value="Groceries">Groceries</option>
         </select>
 
-        {/* Sort */}
         <select
           onChange={(e) =>
             e.target.value === "low"
               ? setFilters({ sortBy: "price", order: "asc" })
               : setFilters({ sortBy: "price", order: "desc" })
           }
-          className="border px-3 py-2 rounded"
+          className="border  border-gray-200 shadow-xl  px-3 py-2 rounded"
         >
           <option value="">Sort by price</option>
           <option value="low">Price: Low → High</option>
@@ -89,16 +84,15 @@ const ProductList = () => {
 
         <button
           onClick={list}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 hover:cursor-pointer"
+          className="bg-blue-500 text-white px-5 py-2 shadow-xl border border-blue-200  rounded hover:bg-blue-600 hover:cursor-pointer"
         >
           Apply
         </button>
         <DownloadCSVButton/>
       </div>
 
-      {/* Table */}
       <div className="overflow-x-auto rounded-xl hover:cursor-pointer">
-        <table className="min-w-full">
+        <table className="min-w-full shadow-xl border-blue-200">
           <thead className="bg-blue-100 hover:bg-blue-200">
             <tr>
               <th className="p-2">Name</th>
@@ -123,7 +117,6 @@ const ProductList = () => {
                   <td className="p-2">{product.category}</td>
                   <td className="p-2">{product.price}</td>
 
-                  {/* Low Stock Indicator */}
                   <td
                     className={`p-2 font-semibold ${
                       product.quantity < 10

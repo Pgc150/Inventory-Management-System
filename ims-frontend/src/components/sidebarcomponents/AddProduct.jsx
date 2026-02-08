@@ -65,7 +65,7 @@ const [formData, setFormData] = useState(initialFormData);
             className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
           >
 
-    {/* Header */}
+    
       <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold">Add Product</h2>
             <button onClick={onClose}>
@@ -74,13 +74,12 @@ const [formData, setFormData] = useState(initialFormData);
           </div>
    
 
-    {/* FORM */}
     <form onSubmit={handleSubmit} className="space-y-4">
      
       <main className=''>
         <div>
           
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Name
          </label>
          <input
@@ -94,7 +93,7 @@ const [formData, setFormData] = useState(initialFormData);
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Description
          </label>
          <textarea
@@ -107,10 +106,10 @@ const [formData, setFormData] = useState(initialFormData);
         />
         </div>
 
-       {/* price & quantity */}
+       
        <div className='flex gap-2'>
           <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Price
          </label>
          <input
@@ -124,7 +123,7 @@ const [formData, setFormData] = useState(initialFormData);
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Quantity
          </label>
          <input
@@ -139,7 +138,7 @@ const [formData, setFormData] = useState(initialFormData);
        </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Category
          </label>
         <select
@@ -158,7 +157,7 @@ const [formData, setFormData] = useState(initialFormData);
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Product Image
          </label>
          <input
@@ -204,7 +203,6 @@ const [formData, setFormData] = useState(initialFormData);
 
     </form>
 
-  
      </motion.div>
     </motion.div>
     )}

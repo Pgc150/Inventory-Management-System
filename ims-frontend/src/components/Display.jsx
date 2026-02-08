@@ -6,6 +6,8 @@ import { LayoutDashboard, CopyPlus, PictureInPicture2 } from "lucide-react";
 export const Display = () => {
   const{authUser} = useAuthStore()
   const{productList} = useProductStore()
+  const csvData = useProductStore((state) => state.csvData)
+  
   const cards = [
     {
       title: "Total Products",
@@ -27,13 +29,6 @@ export const Display = () => {
     },
   ];
 
-
-  const totalInventoryValue = productList.reduce(
-    (acc,p) => acc + p.price * p.quantity,
-    0
-  )
-
-  const totalProductCount = productList.length
 
   const lowStockCount = productList.filter(p => p.quantity <= 10).length
   return (

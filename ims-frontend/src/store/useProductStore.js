@@ -11,7 +11,8 @@ export const useProductStore = create ((set,get)=> ({
        isUpdating:false,
        isDownloading: false,
        csvData:[],
-       
+       setCSVData:(data) => set({csvData:data}),
+
        filters :{
            search:"",
            category:"",
@@ -108,7 +109,6 @@ export const useProductStore = create ((set,get)=> ({
               withCredentials:true,
             })
             set({csvData:res.data})
-
             const blob = new Blob([res.data],{type:"text/csv"})
             const link = document.createElement("a")
 
