@@ -25,24 +25,6 @@ Filter by category
 
 Sort by creation date, price, or quantity
 
-Frontend
-
-Responsive and user-friendly interface using React.js + Tailwind CSS
-
-Form validations for secure data input
-
-Backend
-
-RESTful API with Express.js
-MongoDB database integration
-API endpoints tested with Postman
-Image uploads via Cloudinary (optional)
-
-Smooth animations with Framer Motion
-
-
-Image uploads via Cloudinary 
-
 Smooth animations with Framer Motion
 
 
@@ -82,18 +64,7 @@ cd ims-frontend
 npm install
 Start the frontend:
 npm run dev
-# Testing APIs
-Use Postman to test backend APIs:
-
-POST /api/auth/signup – Register user
-
-POST /api/auth/login – Login user
-
-GET /api/product/list – Get all products
-
-POST /api/product/create – Add a product
-
-PUT /api/product/update/:id – Update product
+## API Documentation
 
 DELETE /api/product/delete/:id – Delete product
 
