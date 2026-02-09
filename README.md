@@ -66,8 +66,6 @@ Start the frontend:
 npm run dev
 ## API Documentation
 
-DELETE /api/product/delete/:id – Delete product
-
 
 
 
