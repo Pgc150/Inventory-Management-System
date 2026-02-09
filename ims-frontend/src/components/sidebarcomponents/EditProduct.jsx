@@ -24,7 +24,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
         price: product.price,
         quantity: product.quantity,
         category: product.category,
-        image: null, // important
+        image: null,
       });
     }
   }, [product]);
@@ -51,15 +51,15 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
           exit={{ scale: 0.9, opacity: 0 }}
           className="bg-white w-full max-w-md rounded-2xl p-6 shadow-xl"
         >
-          {/* Header */}
+        
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Edit Product</h2>
+            <h2 className="text-xl text-gray-600 font-bold">Edit Product</h2>
             <button onClick={onClose}>
               <X  className="hover:cursor-pointer"/>
             </button>
           </div>
 
-          {/* Form */}
+          
           <form onSubmit={handleSubmit} className="space-y-3">
             <input
               type="text"
@@ -68,7 +68,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
               onChange={(e) =>
                 setFormData({ ...formData, name: e.target.value })
               }
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border border-gray-200 shadow-xl px-3 py-2 rounded"
             />
 
             <textarea
@@ -77,7 +77,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })
               }
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border px-3 py-2 border-gray-200 shadow-xl rounded"
             />
 
             <div className="flex gap-2">
@@ -88,7 +88,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, price: e.target.value })
                 }
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 border-gray-200 shadow-xl rounded"
               />
 
               <input
@@ -98,7 +98,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, quantity: e.target.value })
                 }
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 border-gray-200 shadow-xl rounded"
               />
             </div>
 
@@ -107,7 +107,7 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
               onChange={(e) =>
                 setFormData({ ...formData, category: e.target.value })
               }
-              className="w-full border px-3 py-2 rounded"
+              className="w-full border px-3 py-2 border-gray-200 shadow-xl rounded"
             >
               <option value="">Select category</option>
               <option value="Electronics">Electronics</option>
@@ -121,12 +121,12 @@ export const EditProduct = ({ isOpen, onClose, product }) => {
               onChange={(e) =>
                 setFormData({ ...formData, image: e.target.files[0] })
               }
-              className="w-full border px-3 py-2 rounded mt-2 mb-2"
+              className="w-full border px-3 py-2 rounded mt-2  border-gray-200 shadow-xl mb-5"
             />
 
             <button
               disabled={isUpdating}
-              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 hover:cursor-pointer"
             >
               {isUpdating ? (
                 <span className='flex items-center justify-center gap-2'>

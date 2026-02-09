@@ -67,7 +67,7 @@ const [formData, setFormData] = useState(initialFormData);
 
     
       <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Add Product</h2>
+            <h2 className="text-xl text-gray-600 font-bold">Add Product</h2>
             <button onClick={onClose}>
               <X />
             </button>
@@ -86,7 +86,7 @@ const [formData, setFormData] = useState(initialFormData);
           type="text"
           required
           placeholder="Enter Product name"
-          className="w-full mb-3 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.name}
           onChange={(e) => setFormData({...formData, name:e.target.value})}
         />
@@ -100,7 +100,7 @@ const [formData, setFormData] = useState(initialFormData);
           type="text"
           required
           placeholder="Enter Product Description"
-          className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2  border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.description}
           onChange={(e) => setFormData({...formData, description:e.target.value})}
         />
@@ -116,7 +116,7 @@ const [formData, setFormData] = useState(initialFormData);
           type="number"
           required
           placeholder="0"
-          className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2  border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.price}
           onChange={(e) => setFormData({...formData, price:e.target.value})}
         />
@@ -130,7 +130,7 @@ const [formData, setFormData] = useState(initialFormData);
           type="number"
           required
           placeholder="10"
-          className="w-full px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.quantity}
           onChange={(e) => setFormData({...formData, quantity:e.target.value})}
         />
@@ -146,7 +146,7 @@ const [formData, setFormData] = useState(initialFormData);
          onChange={(e) =>
          setFormData({ ...formData, category: e.target.value })
          }
-        className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full mb-3 px-4 py-2  border-gray-200 shadow-xl border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Select</option>
           <option value="Electronics">Electronics</option>
@@ -164,7 +164,7 @@ const [formData, setFormData] = useState(initialFormData);
           type="file"
           required
           placeholder="Enter Product Description"
-          className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           
           onChange={(e) => setFormData({...formData, image:e.target.files[0]})}
         />
@@ -175,13 +175,13 @@ const [formData, setFormData] = useState(initialFormData);
       <div className='flex gap-4 pt-2'>
         <button
         type="submit"
-        disabled={isLoading}
-        className={`w-full py-2 rounded-lg font-semibold transition ${
-          isLoading ? "bg-blue-300 cursor cursor-not-allowed"
+        disabled={isAdded}
+        className={`w-full py-2 rounded-lg font-semibold shadow-xl border border-blue-200 transition ${
+          isAdded ? "bg-blue-300 cursor cursor-not-allowed"
           : "bg-blue-500 hover:bg-blue-600 text-white"
         }`}
       >
-        {isLoading ? (
+        {isAdded ? (
           <span className='flex items-center justify-center gap-2'>
             <Loader2 className='w-4 h-4 animate-spin'/>
             Adding...
@@ -195,7 +195,7 @@ const [formData, setFormData] = useState(initialFormData);
         type="button"
         disabled={isLoading}
         onClick={onClose}
-        className="w-full bg-red-300 hover:bg-red-500 transform-3d text-white py-2 rounded-lg font-semibold transition"
+        className="w-full bg-red-300 border border-red-200 hover:bg-red-500 transform-3d text-white py-2 rounded-lg font-semibold transition"
       >
         Cancel
       </button>
