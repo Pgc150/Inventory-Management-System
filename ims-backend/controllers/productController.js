@@ -83,7 +83,6 @@ export const getProducts = async (req,res) => {
         const {category ,sortBy='createdAt',order = 'desc',search} = req.query
 
         let query = {user: req.user}  // gives only logged in user's data
-        // let query = {user: req.user._id}
         
         // filter by category
         if(category && ['Electronics','Clothing','Food','Groceries'].includes(category)){
@@ -102,13 +101,37 @@ export const getProducts = async (req,res) => {
         const sortOptions = {}
         sortOptions[sortBy] = order === 'asc' ? 1 : -1
 
-        const products = await Product.find(query).sort(sortOptions).select('-__v')
+        
+        const [products, stats] = await Promise.all([
+            Product.find(query).sort(sortOptions).select('-__v'),
+
+            Product.aggregate([
+                { $match: { user: req.user._id } }, // match with logged in user's id
+                {
+                    $group: {
+                        _id: null,
+                        totalProducts: { $sum: 1 },
+                        lowStockCount: {
+                            $sum: {
+                                $cond: [{ $lte: ["$quantity", 10] }, 1, 0]
+                            }
+                        },
+                        totalInventoryValue: {
+                            $sum: { $multiply: ["$price", "$quantity"] }
+                        }
+                    }
+                }
+            ])
+        ]);
 
         res.status(200).json({
             success: true,
             count: products.length,
+            stats: stats[0] || {},
             data: products
-        })
+        });
+
+
 
     } catch (error) {
         console.error('Get products error:', error.message);
