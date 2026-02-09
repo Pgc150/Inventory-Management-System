@@ -54,7 +54,7 @@ export const Display = () => {
             {card.icon}
             <h2 className=" font-bold">{card.title}</h2>
           </div>
-          <p className="text-xl font-bold">{lowStockCount}</p>
+          <p className="text-xl font-bold">{card.value}</p>
         </div>
       ))}
     </div>

@@ -12,8 +12,8 @@ import StockDisplay from './sidebarcomponents/StockDisplay';
 import { Navbar } from './Navbar';
 export const Sidebar = (onClose, showClose = false) => {
     const {authUser} = useAuthStore()
-     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-     const [activeItem, setActiveItem] = useState('dashboard');
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+    const [activeItem, setActiveItem] = useState('dashboard');
   return (
 
      <motion.aside
@@ -22,26 +22,31 @@ export const Sidebar = (onClose, showClose = false) => {
       transition={{ duration: 0.1 }}
       className="w-70 h-screen sticky top-0
                  bg-white shadow-lg
-                 flex flex-col"
-    >
+                 flex flex-col md:sticky"
+      >
 
-      {/* Header */}
       <div className="p-4  flex items-center justify-between">
-        <h1 className="text-4xl font-bold text-blue-500">
+        <h1 className="text-4xl text-center justify-center font-bold text-blue-500">
           Invento
         </h1>
       </div>
 
-      {/* 🧾 Scrollable Menu */}
+      {showClose && (
+        <button 
+         onClick={onClose}
+         className='mg:hidden text-gray-500 hover:text-red-500'
+        >
+          X
+        </button>
+      )}
+
+      
       <nav className="flex-1 overflow-y-auto p-4 space-y-2 scrollbar">
         <Item to="/dashboard" icon={<Home className="w-5 h-5 "/>} label="Dashboard" onClose={onClose} />
         <Item to="/table" icon={<Boxes className='w-5 h-5'/>} label="Stock Display" onClose={onClose} />
         <Item to="/productpiechart" icon={<BarChart3 className='w-5 h-5'/>} label="Stock Analysis" onClose={onClose} />
-
-        {/* add more items to see scrollbar */}
       </nav>
 
-      {/* Profile */}
       <div className=" p-4 bg-blue-50">
         <Navbar/>
       </div>
