@@ -93,8 +93,13 @@ export const logout = (req,res) => {
 }
 
 export const getUser = (req,res) => {
-    res.status(200).json(req.user)
-    console.log("Error is check auth")
+    try {
+        res.status(200).json(req.user)
+    } catch (error) {
+        res.status(500).json({message:"error in checkAuth"})
+    }
+    
+    
 }
 
 

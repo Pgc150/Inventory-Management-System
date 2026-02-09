@@ -11,7 +11,7 @@ const deleteImage = async (publicId) => {
     }
 }
 
-// create new product
+
 export const createProduct = async (req,res) => {
     try {
         const {name, description,price,quantity,category} = req.body;
@@ -77,7 +77,7 @@ export const createProduct = async (req,res) => {
 }
 
 
-// get all products
+
 export const getProducts = async (req,res) => {
     try {
         const {category ,sortBy='createdAt',order = 'desc',search} = req.query
@@ -119,7 +119,7 @@ export const getProducts = async (req,res) => {
     }
 }
 
-// get single product 
+
 export const getProductById = async (req,res) => {
     try {
         const product = await Product.findById(req.params.id)
@@ -144,7 +144,7 @@ export const getProductById = async (req,res) => {
     }
 }
 
-// Update Product
+
 export const updateProduct = async (req,res) => {
     try {
         const {name,description,price,quantity,category,removeImage} = req.body;
