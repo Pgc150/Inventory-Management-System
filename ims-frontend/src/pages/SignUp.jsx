@@ -68,7 +68,6 @@ const SignUp = () => {
         <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-400 rounded-full blur-xl opacity-30 animate-blob animation-delay-2000" />
       </div>
 
-      {/* right div */}
    
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
 
@@ -79,7 +78,6 @@ const SignUp = () => {
     className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
   >
 
-    {/* Header */}
     <div className="mb-6 relative text-center">
       {/* <UserPlus className='w-8 h-8 text-gray-600'/> */}
       <h2 className="text-2xl font-bold text-gray-600">
@@ -90,10 +88,9 @@ const SignUp = () => {
       </p>
     </div>
 
-    {/* FORM */}
+   
     <form onSubmit={handleSubmit} className="space-y-4">
 
-      {/* Name */}
       <div>
           <label className="block text-left  text-gray-600 mb-1">
               Name 
@@ -106,8 +103,8 @@ const SignUp = () => {
                 type="email"
                 placeholder="Enter your name"
                 className="w-full pl-12 pt-2 px-5 py-4 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email:e.target.value})}
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name:e.target.value})}
               />
             </div>
         </div>
@@ -165,7 +162,6 @@ const SignUp = () => {
          </div>
        </div>
 
-      {/* Button */}
       <button
         type="submit"
         className="w-full  pt-3 pb-3 bg-blue-600 shadow-xl border border-blue-300 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
@@ -175,7 +171,6 @@ const SignUp = () => {
 
     </form>
 
-    {/* Footer */}
     <p className="text-sm text-center text-gray-500 mt-4">
       Already have an account?{" "}
       <span className="text-blue-600 font-semibold cursor-pointer">
