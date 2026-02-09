@@ -145,19 +145,18 @@ withCredentials: true
 
 *Add screenshots of the application UI here*
 
-```md
-![Login Page]
+Login Page
 <img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/c805452d-780e-4fe8-8660-e005562d91c4" />
 
-![Dashboard](screenshots/dashboard.png)
+Dashboard
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/62c03997-4344-4dbd-9fbd-bed7594ccbc3" />
 
-![Product List]
+Product List
 
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/82b51656-670b-4a24-ae70-533938ba8519" />
 
-``
-![PieChart
+
+PieChart
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4ea2a56e-7c2a-4a8b-b33e-0c192dec1594" />
 
 ---
