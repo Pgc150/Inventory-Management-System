@@ -4,6 +4,11 @@ import { productInstance } from "../lib/axios";
 
 export const useProductStore = create ((set,get)=> ({
        productList:[],
+       dashboardData:{
+         totalProducts:0,
+         lowStockCount:0,
+         totalInventoryValue:0
+       },
        isAdded : false ,
        isUpdated:false,
        isDeleted:false,
@@ -21,7 +26,7 @@ export const useProductStore = create ((set,get)=> ({
        },
 
        setFilters:(newFilters) => 
-        set({filters:{...get().filters,...newFilters}}),
+       set({filters:{...get().filters,...newFilters}}),
 
        add : async(data) =>{
           set({isAdded:true})
@@ -66,6 +71,11 @@ export const useProductStore = create ((set,get)=> ({
             console.log("list api response", res.data.data);
 
             set({productList:res.data.data})
+            set({dashboardData:res.data.stats || {
+              totalProducts:0,
+              lowStockCount:0,
+              totalInventoryValue:0
+            }})
           } catch (error) {
             console.log("Error in list Product",error)
             toast.error(error.response.data)

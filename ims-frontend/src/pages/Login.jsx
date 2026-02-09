@@ -20,15 +20,14 @@ const Login = () => {
     const {login,isLoggingIn} = useAuthStore();
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
         const sucess = await login(formData)
         if(sucess){
           navigate("/dashboard");
-      }
+        }
     }
   return (
      <div className='min-h-screen w-full flex  bg-gray-50'>
-      {/* left div */}
+      
       <div className="hidden lg:flex lg:w-1/2 h-screen sticky top-0 bg-blue-400 relative  items-center justify-center">
         <div className="absolute inset-0 bg-linear-to-br from-blue-600 to-blue-900 opacity-90" />
 
@@ -50,8 +49,6 @@ const Login = () => {
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-500 rounded-full blur-xl opacity-30 animate-blob" />
         <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-400 rounded-full blur-xl opacity-30 animate-blob animation-delay-2000" />
       </div>
-
-      {/* right div */}
    
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
 
@@ -61,11 +58,14 @@ const Login = () => {
     transition={{ duration: 0.6 }}
     className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
   >
-
-   
     <div className="mb-6 text-center">
       <h2 className="text-2xl font-bold text-gray-600">
-        Login
+        {isLoggingIn ? (
+          <span className='flex items-center justify-center gap-2'>
+                <Loader2 className='w-4 h-4 animate-spin'/>
+                  Login...
+           </span>
+        ) : ("Login")}
       </h2>
       <p className="text-gray-500 mt-1">
         Enter your credentials to continue
@@ -136,7 +136,6 @@ const Login = () => {
 
     </form>
 
-   
     <p className="text-sm text-center text-gray-500 mt-4">
      Don’t have an account ?{" "}
       <span className="text-blue-500 font-semibold cursor-pointer">

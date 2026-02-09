@@ -10,7 +10,6 @@ import { AddProduct } from "./sidebarcomponents/AddProduct";
 import { OctagonAlert } from 'lucide-react';
 
 const ProductList = () => {
-
   const [selectedProduct,setSelectedProduct] = useState(null)
   const[isEditOpen,setIsEditOpen] = useState(false)
   const[isAddOpen,setIsAddOpen] = useState(false)
