@@ -1,4 +1,173 @@
 
+# 📦 Inventory Management System
+
+A full-stack **Inventory Management System** designed to manage products efficiently with secure authentication, role-based access, and data export capabilities. This application helps businesses track inventory, update product details, and generate reports seamlessly.
+
+---
+
+## 🚀 Features
+
+### 🔐 Authentication & Security
+
+* User login using **secure HTTP-only cookies**
+* Session-based authentication
+* Protected routes for authorized users only
+* CORS configured with credentials support
+
+### 📦 Product Management
+
+* Add new products with name, price, quantity, and category
+* View a complete list of products
+* Update existing product details
+* Inventory data stored securely in the database
+
+### 🔍 Inventory Insights
+
+* Centralized dashboard to manage inventory
+* Easy tracking of product quantities and pricing
+* Scalable structure for future analytics and reporting
+
+### 📊 Export & Reporting
+
+* Export complete product data in **CSV format**
+* Useful for reporting, backups, and external analysis
+
+### 🌐 Full-Stack Architecture
+
+* RESTful API design
+* Clean separation of frontend and backend
+* Scalable and maintainable codebase
+
+---
+
+## 🛠 Tech Stack
+
+### Frontend
+
+* React (Vite)
+* Tailwind CSS
+* Axios
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB
+* Cookie-based authentication
+
+---
+
+## ⚙️ Setup Instructions
+
+### Prerequisites
+
+* Node.js (v16 or higher)
+* npm or yarn
+* MongoDB (local or MongoDB Atlas)
+
+---
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
+```
+
+---
+
+### 2️⃣ Backend Setup
+
+```bash
+cd backend
+npm install
+```
+
+Create a `.env` file in the backend folder:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_secret_key
+NODE_ENV
+```
+
+Start the backend server:
+
+```bash
+node index.js
+```
+
+---
+
+### 3️⃣ Frontend Setup
+
+```bash
+cd frontend
+npm install
+```
+
+Create a `.env` file in the frontend folder:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+---
+
+### 4️⃣ Access the Application
+
+* Frontend: `http://localhost:5173`
+* Backend API: `http://localhost:5000/api`
+
+---
+
+## 🍪 Authentication Notes
+
+* Authentication is handled using **HTTP-only cookies**
+* Axios requests include:
+
+```js
+withCredentials: true
+```
+
+* Backend CORS is configured to allow credentials
+
+---
+
+## 📸 Screenshots
+
+*Add screenshots of the application UI here*
+
+```md
+![Login Page]
+<img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/c805452d-780e-4fe8-8660-e005562d91c4" />
+
+![Dashboard](screenshots/dashboard.png)
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/62c03997-4344-4dbd-9fbd-bed7594ccbc3" />
+
+![Product List]
+
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/82b51656-670b-4a24-ae70-533938ba8519" />
+
+``
+![PieChart
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/4ea2a56e-7c2a-4a8b-b33e-0c192dec1594" />
+
+---
+
+---
+
+
+
+
+
 ## 🔗 API Documentation
 
 This application exposes a set of RESTful APIs for authentication and inventory/product management. The backend uses **cookie-based authentication** (HTTP-only cookies), and all protected routes require a valid authentication cookie to be sent with each request.
