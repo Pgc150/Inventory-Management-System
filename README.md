@@ -143,7 +143,7 @@ withCredentials: true
 
 ## 📸 Screenshots
 
-*Add screenshots of the application UI here*
+
 
 # Login Page
 <img width="1917" height="927" alt="image" src="https://github.com/user-attachments/assets/c805452d-780e-4fe8-8660-e005562d91c4" />
@@ -349,33 +349,16 @@ Returns product information such as name, price, quantity, category, and timesta
 
 ---
 
-## 🍪 Authentication & CORS Notes
 
-* Authentication is handled using **HTTP-only cookies**.
-* Frontend API calls must include:
+# Future Enhancements
 
-```js
-withCredentials: true
-```
+Role-based access control (Admin/User)
 
-* Backend CORS configuration must allow credentials and the frontend origin:
+Advanced inventory analytics
 
-```js
-credentials: true
-```
+Pagination, search, and filters
 
----
-
-## ✅ Summary
-
-* RESTful API design
-* Cookie-based authentication
-* Protected product routes
-* CSV export support for inventory data
-
-This API is designed to work seamlessly with a React + Axios frontend and a Node.js/Express backend.
-
-
+PDF export support
 
 
 
