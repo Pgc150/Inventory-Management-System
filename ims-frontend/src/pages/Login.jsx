@@ -60,12 +60,7 @@ const Login = () => {
   >
     <div className="mb-6 text-center">
       <h2 className="text-2xl font-bold text-gray-600">
-        {isLoggingIn ? (
-          <span className='flex items-center justify-center gap-2'>
-                <Loader2 className='w-4 h-4 animate-spin'/>
-                  Login...
-           </span>
-        ) : ("Login")}
+        Login
       </h2>
       <p className="text-gray-500 mt-1">
         Enter your credentials to continue
@@ -131,7 +126,12 @@ const Login = () => {
         type="submit"
         className="w-full bg-blue-500 pt-3 pb-3 hover:bg-blue-700 shadow-xl border border-blue-300 text-white py-2 rounded-lg font-semibold transition"
       >
-        Login
+        {isLoggingIn ? (
+          <span className='flex items-center justify-center gap-2'>
+                <Loader2 className='w-4 h-4 animate-spin'/>
+                  Login...
+           </span>
+        ) : ("Login")}
       </button>
 
     </form>

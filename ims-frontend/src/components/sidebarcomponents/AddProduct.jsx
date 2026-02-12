@@ -22,18 +22,22 @@ const [formData, setFormData] = useState(initialFormData);
    const validateForm = () =>{
       if (!formData.name.trim()) return toast.error("name is required");
       if (!formData.description.trim()) return toast.error("description is required");
-      if (formData.price <= 100) return toast.error("Price cannot be less than 100");
-      if (formData.quantity <= 0) return toast.error("Enter a valid quantity");
+      if (Number(formData.price < 100)) return toast.error("Price cannot be less than 100");
+      if (Number(formData.quantity <= 0)) return toast.error("Enter a valid quantity");
     return true;
     }
 
   const handleSubmit = async(e) => {
       e.preventDefault()
-      const sucess = validateForm()
-      if(!sucess) return
+      const success = validateForm()
+      if(!success) return
       try {
         setIsLoading(true);
-        await add(formData);
+        const result = await add(formData);
+        if(!result){
+          toast.error("Failed to add product")
+          return
+        }
         setFormData(initialFormData);
         onClose();
       } catch (err) {
@@ -50,7 +54,7 @@ const [formData, setFormData] = useState(initialFormData);
   <AnimatePresence>
     {isAddOpen && (
       <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

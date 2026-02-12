@@ -166,7 +166,12 @@ const SignUp = () => {
         type="submit"
         className="w-full  pt-3 pb-3 bg-blue-600 shadow-xl border border-blue-300 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
       >
-        Sign Up
+        {isSigningUp ? (
+          <span className='flex items-center justify-center gap-2'>
+            <Loader2 className='w-4 h-4 animate-spin'/>
+             SignUp...
+          </span>
+          ) : ("SignUp")}
       </button>
 
     </form>

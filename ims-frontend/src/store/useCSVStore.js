@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import Papa from 'papaparse';
-import axios from 'axios';
+import { productInstance } from '../lib/axios';
 
 const useCSVStore = create((set) => ({
   products: [],
@@ -12,7 +12,7 @@ const useCSVStore = create((set) => ({
     set({ loading: true, error: null });
     
     try {
-       const response = await axios.get('http://localhost:5000/api/product/export/csv', {
+       const response = await productInstance.get('/product/export/csv', {
         withCredentials: true, // This sends cookies with the request
         headers: {
           'Content-Type': 'text/csv',

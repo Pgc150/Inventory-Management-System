@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 import { BarChart3 } from 'lucide-react'; 
 
 import { AddProduct } from './sidebarcomponents/AddProduct';
-import StockDisplay from './sidebarcomponents/StockDisplay';
 import { Navbar } from './Navbar';
 export const Sidebar = (onClose, showClose = false) => {
     const {authUser} = useAuthStore()

@@ -2,9 +2,6 @@ import { create } from "zustand";
 import axiosInstance from '../lib/axios.js'
 import toast from "react-hot-toast";
 
-
-const BASE_URL = "http://localhost:5000"
-
 export const useAuthStore = create ((set,get)=>({
     authUser:null,
     isSigningUp:false,
@@ -37,7 +34,7 @@ export const useAuthStore = create ((set,get)=>({
             toast.success("Logged in sucessfully");
             return true
         } catch (error) {
-            toast.error(error.response.data.message)
+            toast.error(error.response?.data?.message || "Login Failed")
         }finally{
              set({isLoggingIn : false})
         }

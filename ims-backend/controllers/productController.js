@@ -42,6 +42,9 @@ export const createProduct = async (req,res) => {
             imagePublicId = req.file.filename;
         }
 
+        console.log("body",req.body)
+        console.log("file",req.file)
+
         // create product 
         const product =  new Product ({
             name,
@@ -82,7 +85,7 @@ export const getProducts = async (req,res) => {
     try {
         const {category ,sortBy='createdAt',order = 'desc',search} = req.query
 
-        let query = {user: req.user}  // gives only logged in user's data
+        let query = {user: req.user._id}  // gives only logged in user's data
         
         // filter by category
         if(category && ['Electronics','Clothing','Food','Groceries'].includes(category)){
@@ -143,29 +146,7 @@ export const getProducts = async (req,res) => {
 }
 
 
-export const getProductById = async (req,res) => {
-    try {
-        const product = await Product.findById(req.params.id)
 
-         if (!product) {
-            return res.status(404).json({
-                success: false,
-                message: 'Product not found'
-            });
-        }
-
-        res.status(200).json({
-            success: true,
-            data: product
-        });
-    } catch (error) {
-        console.error('Get product error:', error.message);
-        res.status(500).json({
-            success: false,
-            message: 'Server error'
-        });
-    }
-}
 
 
 export const updateProduct = async (req,res) => {

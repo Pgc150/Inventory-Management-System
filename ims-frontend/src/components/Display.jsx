@@ -4,6 +4,7 @@ import { useAuthStore } from '../store/useAuthStore'
 import { useProductStore } from '../store/useProductStore';
 import { LayoutDashboard, CopyPlus, PictureInPicture2 } from "lucide-react";
 import { useEffect } from 'react';
+
 export const Display = () => {
   const{authUser} = useAuthStore()
   const{dashboardData,list} = useProductStore()
@@ -48,7 +49,7 @@ export const Display = () => {
           className={`bg-white p-6 rounded-xl shadow hover:shadow-xl hover:cursor-pointer transform hover:scale-105 transition-transform border-t-4 border-red-200`}
         >
           <div className="flex items-center gap-4 mb-4">
-            <CopyPlus className="w-8 h-8 text-red-200" />,
+            <CopyPlus className="w-8 h-8 text-red-200" />
             <h2 className="font-bold">LowStockCount</h2>
           </div>
           <p className="text-xl font-bold">{lowStockCount}</p>

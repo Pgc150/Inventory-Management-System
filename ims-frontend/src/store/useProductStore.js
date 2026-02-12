@@ -30,7 +30,6 @@ export const useProductStore = create ((set,get)=> ({
 
        add : async(data) =>{
           set({isAdded:true})
-
           try {
             const res = await productInstance.post('/product/add',data)
             set({productData:res.data})
