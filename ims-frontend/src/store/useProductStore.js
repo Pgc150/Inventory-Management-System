@@ -33,11 +33,10 @@ export const useProductStore = create ((set,get)=> ({
           try {
             const res = await productInstance.post('/product/add',data)
             set({productData:res.data})
-            console.log("Response:",res)
-            toast.success("Product Added Sucessfully")
+            return true
           } catch (error) {
             console.log("Error in AddProduct",error)
-            toast.error(error.reponse.data.message)
+           return false
           } finally{
             set({isAdded: false})
           }

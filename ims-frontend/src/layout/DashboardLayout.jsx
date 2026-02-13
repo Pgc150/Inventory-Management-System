@@ -1,9 +1,8 @@
 import {Sidebar} from "../components/Sidebar"
 import { Outlet } from "react-router-dom"
-import { useState } from "react"
+
 
 const DashboardLayout = () => {
-  const [open,setOpen] = useState(false)
   return (
     <div className="flex min-h-screen">
       <Sidebar />

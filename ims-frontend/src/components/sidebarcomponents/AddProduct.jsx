@@ -22,8 +22,8 @@ const [formData, setFormData] = useState(initialFormData);
    const validateForm = () =>{
       if (!formData.name.trim()) return toast.error("name is required");
       if (!formData.description.trim()) return toast.error("description is required");
-      if (Number(formData.price < 100)) return toast.error("Price cannot be less than 100");
-      if (Number(formData.quantity <= 0)) return toast.error("Enter a valid quantity");
+      if (Number(formData.price) < 100) return toast.error("Price cannot be less than 100");
+      if (Number(formData.quantity) <= 0) return toast.error("Enter a valid quantity");
     return true;
     }
 
@@ -33,11 +33,22 @@ const [formData, setFormData] = useState(initialFormData);
       if(!success) return
       try {
         setIsLoading(true);
-        const result = await add(formData);
+        const data = new FormData()
+
+       data.append("name", formData.name);
+       data.append("description", formData.description);
+       data.append("price", formData.price);
+       data.append("quantity", formData.quantity);
+       data.append("category", formData.category);
+       data.append("image", formData.image);
+
+       const result = await add(data)
+         
         if(!result){
           toast.error("Failed to add product")
           return
         }
+        toast.success("Product added successfully")
         setFormData(initialFormData);
         onClose();
       } catch (err) {

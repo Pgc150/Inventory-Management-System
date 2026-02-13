@@ -4,7 +4,6 @@ import { useProductStore } from "../store/useProductStore";
 import { useAuthStore } from "../store/useAuthStore";
 import { EditProduct } from "./sidebarcomponents/EditProduct";
 import { motion } from "framer-motion";
-import { Download } from "lucide-react";
 import DownloadCSVButton from "./DownloadCSVButton";
 import { AddProduct } from "./sidebarcomponents/AddProduct";
 import { OctagonAlert } from 'lucide-react';
@@ -113,6 +112,7 @@ const ProductList = () => {
               productList.map((product) => (
                 <tr key={product._id} className="text-center hover:bg-blue-100">
                   <td className="p-2">{product.name}</td>
+                
                   <td className="p-2">{product.category}</td>
                   <td className="p-2">{product.price}</td>
 
