@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion ,AnimatePresence} from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useProductStore } from '../../store/useProductStore'
 import toast from 'react-hot-toast'
-import { X } from 'lucide-react';
+import { X,Loader2 } from 'lucide-react';
 
-export const AddProduct = () => {
+export const AddProduct = ({isAddOpen,onClose}) => {
   const {add,isAdded} = useProductStore()
+  const [isLoading, setIsLoading] = useState(false)
   const initialFormData = {
   name: "",
   description: "",
@@ -21,98 +22,130 @@ const [formData, setFormData] = useState(initialFormData);
    const validateForm = () =>{
       if (!formData.name.trim()) return toast.error("name is required");
       if (!formData.description.trim()) return toast.error("description is required");
-      if (formData.price <= 100) return toast.error("Price cannot be less than 100");
-      if (formData.quantity <= 0) return toast.error("Enter a valid quantity");
+      if (Number(formData.price) < 100) return toast.error("Price cannot be less than 100");
+      if (Number(formData.quantity) <= 0) return toast.error("Enter a valid quantity");
     return true;
     }
 
   const handleSubmit = async(e) => {
       e.preventDefault()
-      validateForm()
-       await add(formData)
-      setFormData(initialFormData);
+      const success = validateForm()
+      if(!success) return
+      try {
+        setIsLoading(true);
+        const data = new FormData()
+
+       data.append("name", formData.name);
+       data.append("description", formData.description);
+       data.append("price", formData.price);
+       data.append("quantity", formData.quantity);
+       data.append("category", formData.category);
+       data.append("image", formData.image);
+
+       const result = await add(data)
+         
+        if(!result){
+          toast.error("Failed to add product")
+          return
+        }
+        toast.success("Product added successfully")
+        setFormData(initialFormData);
+        onClose();
+      } catch (err) {
+        toast.error("Failed to add product");
+      } finally {
+        setIsLoading(false);
+       }
+      
   }
+
+
   return (
-    <div className='bg-gradient-to-br from-blue-50 to-gray-50'>
-      <div className='top-0 flex justify-center  '>
-       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
 
-  <motion.div
-    initial={{ opacity: 0, x: 30 }}
-    animate={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6 }}
-    className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
-  >
+  <AnimatePresence>
+    {isAddOpen && (
+      <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 "
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+        >
+          <motion.div
+            onClick={(e) => e.stopPropagation()}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 20, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
+          >
 
-    {/* Header */}
-    <div className="mb-6 text-center">
-      <h2 className="text-2xl font-bold text-gray-800">
-        Add
-      </h2>
-      <p className="text-gray-500 mt-1">
-        Add Product
-      </p>
-      <Link to='/dashboard'><X className=''/></Link>
-    </div>
+    
+      <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl text-gray-600 font-bold">Add Product</h2>
+            <button onClick={onClose}>
+              <X />
+            </button>
+          </div>
+   
 
-    {/* FORM */}
     <form onSubmit={handleSubmit} className="space-y-4">
      
       <main className=''>
         <div>
           
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Name
          </label>
          <input
           type="text"
           required
           placeholder="Enter Product name"
-          className="w-full mb-3 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.name}
           onChange={(e) => setFormData({...formData, name:e.target.value})}
         />
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Description
          </label>
          <textarea
           type="text"
           required
           placeholder="Enter Product Description"
-          className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2  border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.description}
           onChange={(e) => setFormData({...formData, description:e.target.value})}
         />
         </div>
 
-       {/* price & quantity */}
+       
        <div className='flex gap-2'>
           <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Price
          </label>
          <input
           type="number"
           required
           placeholder="0"
-          className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2  border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.price}
           onChange={(e) => setFormData({...formData, price:e.target.value})}
         />
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left  text-gray-600 mb-1">
           Quantity
          </label>
          <input
           type="number"
           required
           placeholder="10"
-          className="w-full px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-2 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.quantity}
           onChange={(e) => setFormData({...formData, quantity:e.target.value})}
         />
@@ -120,7 +153,7 @@ const [formData, setFormData] = useState(initialFormData);
        </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Category
          </label>
         <select
@@ -128,7 +161,7 @@ const [formData, setFormData] = useState(initialFormData);
          onChange={(e) =>
          setFormData({ ...formData, category: e.target.value })
          }
-        className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full mb-3 px-4 py-2  border-gray-200 shadow-xl border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Select</option>
           <option value="Electronics">Electronics</option>
@@ -139,14 +172,14 @@ const [formData, setFormData] = useState(initialFormData);
         </div>
 
         <div className=''>
-         <label className="block text-left text-sm text-gray-600 mb-1">
+         <label className="block text-left text-gray-600 mb-1">
           Product Image
          </label>
          <input
           type="file"
           required
           placeholder="Enter Product Description"
-          className="w-full mb-3 px-4 py-2 h- border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full mb-3 px-4 py-2 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           
           onChange={(e) => setFormData({...formData, image:e.target.files[0]})}
         />
@@ -154,29 +187,42 @@ const [formData, setFormData] = useState(initialFormData);
 
       </main>
 
-      <div className='flex gap-4'>
+      <div className='flex gap-4 pt-2'>
         <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+        disabled={isAdded}
+        className={`w-full py-2 rounded-lg font-semibold shadow-xl border border-blue-200 transition ${
+          isAdded ? "bg-blue-300 cursor cursor-not-allowed"
+          : "bg-blue-500 hover:bg-blue-600 text-white"
+        }`}
       >
-        Add
+        {isAdded ? (
+          <span className='flex items-center justify-center gap-2'>
+            <Loader2 className='w-4 h-4 animate-spin'/>
+            Adding...
+          </span>
+        ):(
+          "Add"
+        )}
       </button>
 
       <button
-       
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+        type="button"
+        disabled={isLoading}
+        onClick={onClose}
+        className="w-full bg-red-300 border border-red-200 hover:bg-red-500 transform-3d text-white py-2 rounded-lg font-semibold transition"
       >
-        <Link to='/dashboard'>Back</Link>
+        Cancel
       </button>
       </div>
 
     </form>
 
-  </motion.div>
-
-</div>
-    </div>
-    </div>
+     </motion.div>
+    </motion.div>
+    )}
+  
+  </AnimatePresence>  
   )
 }
 

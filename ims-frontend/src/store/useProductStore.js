@@ -4,12 +4,20 @@ import { productInstance } from "../lib/axios";
 
 export const useProductStore = create ((set,get)=> ({
        productList:[],
+       dashboardData:{
+         totalProducts:0,
+         lowStockCount:0,
+         totalInventoryValue:0
+       },
        isAdded : false ,
        isUpdated:false,
        isDeleted:false,
        isLoading:false,
        isUpdating:false,
-       
+       isDownloading: false,
+       csvData:[],
+       setCSVData:(data) => set({csvData:data}),
+
        filters :{
            search:"",
            category:"",
@@ -18,19 +26,17 @@ export const useProductStore = create ((set,get)=> ({
        },
 
        setFilters:(newFilters) => 
-        set({filters:{...get().filters,...newFilters}}),
+       set({filters:{...get().filters,...newFilters}}),
 
        add : async(data) =>{
           set({isAdded:true})
-
           try {
             const res = await productInstance.post('/product/add',data)
             set({productData:res.data})
-            console.log("Response:",res)
-            toast.success("Product Added Sucessfully")
+            return true
           } catch (error) {
             console.log("Error in AddProduct",error)
-            toast.error(error.reponse.data.message)
+           return false
           } finally{
             set({isAdded: false})
           }
@@ -60,9 +66,14 @@ export const useProductStore = create ((set,get)=> ({
             const res = await productInstance.get('/product/list',{
               params:{search,category,sortBy,order}
             })
-            console.log("list api response", res.data);
+            console.log("list api response", res.data.data);
 
             set({productList:res.data.data})
+            set({dashboardData:res.data.stats || {
+              totalProducts:0,
+              lowStockCount:0,
+              totalInventoryValue:0
+            }})
           } catch (error) {
             console.log("Error in list Product",error)
             toast.error(error.response.data)
@@ -96,6 +107,32 @@ export const useProductStore = create ((set,get)=> ({
          } finally {
            set({isUpdating:false})
          }
-       }
+       },
 
+       dowanloadCSV: async () =>{
+          set({isDownloading:true})
+          try {
+            const res = await productInstance.get('/product/export/csv',{
+              responseType:"blob",
+              withCredentials:true,
+            })
+            set({csvData:res.data})
+            const blob = new Blob([res.data],{type:"text/csv"})
+            const link = document.createElement("a")
+
+            link.href = URL.createObjectURL(blob)
+            link.download = "my-products.csv" // set the filename
+
+            document.body.appendChild(link)
+            link.click()
+            document.body.removeChild(link)
+            
+            URL.revokeObjectURL(link.href)  
+          } catch (error) {
+            console.log("CSV download error",error)
+            toast.error("Error dowanloading csv")
+          } finally {
+            set({isDownloading: false})
+          }
+       }
 }))

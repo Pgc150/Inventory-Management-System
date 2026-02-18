@@ -1,6 +1,6 @@
 import Product from '../models/productModel.js'
 import {cloudinary} from '../config/cloudinary.js'
-
+import { Parser } from 'json2csv';
 
 const deleteImage = async (publicId) => {
     if(!publicId) return;
@@ -11,7 +11,7 @@ const deleteImage = async (publicId) => {
     }
 }
 
-// create new product
+
 export const createProduct = async (req,res) => {
     try {
         const {name, description,price,quantity,category} = req.body;
@@ -41,6 +41,9 @@ export const createProduct = async (req,res) => {
             imageUrl = req.file.path;
             imagePublicId = req.file.filename;
         }
+
+        console.log("body",req.body)
+        console.log("file",req.file)
 
         // create product 
         const product =  new Product ({
@@ -77,13 +80,12 @@ export const createProduct = async (req,res) => {
 }
 
 
-// get all products
+
 export const getProducts = async (req,res) => {
     try {
         const {category ,sortBy='createdAt',order = 'desc',search} = req.query
 
-        let query = {user: req.user}  // gives only logged in user's data
-        // let query = {user: req.user._id}
+        let query = {user: req.user._id}  // gives only logged in user's data
         
         // filter by category
         if(category && ['Electronics','Clothing','Food','Groceries'].includes(category)){
@@ -102,13 +104,37 @@ export const getProducts = async (req,res) => {
         const sortOptions = {}
         sortOptions[sortBy] = order === 'asc' ? 1 : -1
 
-        const products = await Product.find(query).sort(sortOptions).select('-__v')
+        
+        const [products, stats] = await Promise.all([
+            Product.find(query).sort(sortOptions).select('-__v'),
+
+            Product.aggregate([
+                { $match: { user: req.user._id } }, // match with logged in user's id
+                {
+                    $group: {
+                        _id: null,
+                        totalProducts: { $sum: 1 },
+                        lowStockCount: {
+                            $sum: {
+                                $cond: [{ $lte: ["$quantity", 10] }, 1, 0]
+                            }
+                        },
+                        totalInventoryValue: {
+                            $sum: { $multiply: ["$price", "$quantity"] }
+                        }
+                    }
+                }
+            ])
+        ]);
 
         res.status(200).json({
             success: true,
             count: products.length,
+            stats: stats[0] || {},
             data: products
-        })
+        });
+
+
 
     } catch (error) {
         console.error('Get products error:', error.message);
@@ -119,32 +145,10 @@ export const getProducts = async (req,res) => {
     }
 }
 
-// get single product
-export const getProductById = async (req,res) => {
-    try {
-        const product = await Product.findById(req.params.id)
 
-         if (!product) {
-            return res.status(404).json({
-                success: false,
-                message: 'Product not found'
-            });
-        }
 
-        res.status(200).json({
-            success: true,
-            data: product
-        });
-    } catch (error) {
-        console.error('Get product error:', error.message);
-        res.status(500).json({
-            success: false,
-            message: 'Server error'
-        });
-    }
-}
 
-// Update Product
+
 export const updateProduct = async (req,res) => {
     try {
         const {name,description,price,quantity,category,removeImage} = req.body;
@@ -257,6 +261,24 @@ export const delteProduct = async (req,res) => {
             sucess: false,
             message: 'Server error'
         })
+    }
+}
+
+export const exportToCSV = async(req,res) => {
+    try {
+        const products = await Product.find({user:req.user.id}) // fetch only logged in user's data
+        .select("name price quantity category")
+        .lean()
+
+        const parser = new Parser()
+        const csv = parser.parse(products)
+
+        res.header("Content-type","text/csv")
+        res.attachment("my-products.csv")
+        res.send(csv)
+    } catch (error) {
+        console.error("Error in export csv",error)
+        res.status(400).json({message:"Server Error"})
     }
 }
 

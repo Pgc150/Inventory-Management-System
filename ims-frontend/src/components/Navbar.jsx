@@ -12,10 +12,6 @@ export const Navbar = () => {
         checkAuth()
     },[])
 
-    //  if(isLoggingOut){
-    //     navigate('/login')
-    // }
-
     useEffect(() => {
       if(!isCheckingAuth && !authUser){
         navigate('/login')
@@ -24,31 +20,42 @@ export const Navbar = () => {
 
     if (!authUser) return null
   return (
-    <div>
-        <div className="p-4 ">
-        <div className="flex  gap-3 px-4 py-3 mb-2 justify-end">
-            <div className="w-10 h-10 text-xl rounded-full bg-blue-100 flex items-center justify-center text-brand-700 font-bold hover:cursor-pointer"
-             onClick={() => setShowSignOut(!showSignOut)}
-            >
-                 {authUser?.name?.charAt(0).toUpperCase()}
-            </div>
-            <div className=" mt-2 min-w-0 hover:bg-blue-50 cursor-pointer">
-                <p className="text-xl font-semibold text-gray-900 truncate">{authUser?.name}</p>
-            </div>
-        </div>
+  <div className="relative">
+  <div className="p-4 text-gray-700">
+    <div
+      className="flex items-center gap-3  rounded-lg hover:bg-blue-50 cursor-pointer transition"
+      onClick={() => setShowSignOut(!showSignOut)}
+    >
+      <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
+        {authUser?.name?.charAt(0).toUpperCase()}
+      </div>
 
-        {showSignOut && (
-          <button 
-            onClick={logout}
-            className="w-full flex justify-end items-center gap-3 px-4 py-2 text-black-600 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium animate-fadeIn"
-          >
-            <LogOut size={18} />
-            Sign Out
-          </button>
-        )}
-        </div>
-        
+      
+      <div className="min-w-0">
+        <p className="text-sm font-semibold truncate">
+          {authUser?.name}
+        </p>
+        <p className="text-xs text-gray-500 truncate">
+          {authUser?.email}
+        </p>
+      </div>
     </div>
+
+   
+    {showSignOut && (
+      <div className="mt-2 bg-white shadow-lg rounded-lg overflow-hidden animate-fadeIn">
+        <button
+          onClick={logout}
+          className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition"
+        >
+          <LogOut size={16} />
+          Sign Out
+        </button>
+      </div>
+    )}
+  </div>
+</div>
+
   )
 }
 

@@ -16,10 +16,11 @@ app.use(express.json()) //extract json data out of body
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser()) // it allow you to parse the cookie
 app.use(cors({
-    origin:"http://localhost:5173 ",
+    origin:["http://localhost:5173",
+        "http://localhost:3000",
+        "https://inventory-management-system-3-ca8q.onrender.com"
+    ],
     credentials:true,
-    // origin:"*",
-    // credentials:false
 }))
 app.use('/api/auth',userRoute)
 app.use('/api/product',productRoutes)

@@ -20,15 +20,14 @@ const Login = () => {
     const {login,isLoggingIn} = useAuthStore();
     const handleSubmit = async (e) => {
         e.preventDefault();
-       
         const sucess = await login(formData)
         if(sucess){
           navigate("/dashboard");
-      }
+        }
     }
   return (
      <div className='min-h-screen w-full flex  bg-gray-50'>
-      {/* left div */}
+      
       <div className="hidden lg:flex lg:w-1/2 h-screen sticky top-0 bg-blue-400 relative  items-center justify-center">
         <div className="absolute inset-0 bg-linear-to-br from-blue-600 to-blue-900 opacity-90" />
 
@@ -50,8 +49,6 @@ const Login = () => {
         <div className="absolute -top-20 -left-20 w-64 h-64 bg-blue-500 rounded-full blur-xl opacity-30 animate-blob" />
         <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-blue-400 rounded-full blur-xl opacity-30 animate-blob animation-delay-2000" />
       </div>
-
-      {/* right div */}
    
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
 
@@ -61,10 +58,8 @@ const Login = () => {
     transition={{ duration: 0.6 }}
     className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md"
   >
-
-    {/* Header */}
     <div className="mb-6 text-center">
-      <h2 className="text-2xl font-bold text-gray-800">
+      <h2 className="text-2xl font-bold text-gray-600">
         Login
       </h2>
       <p className="text-gray-500 mt-1">
@@ -72,50 +67,78 @@ const Login = () => {
       </p>
     </div>
 
-    {/* FORM */}
+    
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-left text-sm text-gray-600 mb-1">
-          Email Address
+        <label className="block text-left  text-gray-600 mb-1">
+          Email 
         </label>
+        <div className="relative w-full ">
+          <Mail
+           className="absolute left-4 top-1/4 w-5 h-5 mr-2 translate-x-1/5 text-gray-400"
+          />
         <input
           type="email"
           placeholder="Enter your email"
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full pl-12 pt-2 px-5 py-4 border border-gray-200 shadow-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           value={formData.email}
           onChange={(e) => setFormData({...formData, email:e.target.value})}
         />
+        </div>
       </div>
 
-      {/* Password */}
-      <div>
-        <label className="block text-left text-sm text-gray-600 mb-1">
-          Password
-        </label>
-        <input
-          type="password"
-          placeholder="Enter your password"
-          className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          value={formData.password}
-          onChange={(e) => setFormData({...formData, password:e.target.value})}
-        />
-      </div>
+  
+    <div>
+     <label className="block text-left text-gray-600 mb-1">
+      Password
+    </label>
+  <div className="relative w-full mb-6">
+   <Lock
+      size={20}
+      className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+    />
+    <input
+      type={showPassword ? "text" : "password"}
+      placeholder="Enter your password"
+      className="w-full  pl-12 border border-gray-200 pr-12 py-3 shadow-xl rounded-lg
+                focus:outline-none focus:ring-2 focus:ring-blue-500"
+      value={formData.password}
+      onChange={(e) =>
+        setFormData({ ...formData, password: e.target.value })
+      }
+    />
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-4 top-1/2 -translate-y-1/2 
+                 text-gray-400 hover:text-blue-500"
+    >
+      {showPassword ? (
+        <EyeOff className="w-5 h-5" />
+      ) : (
+        <Eye className="w-5 h-5" />
+      )}
+    </button>
+  </div>
+</div>
 
-
-      {/* Button */}
       <button
         type="submit"
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-semibold transition"
+        className="w-full bg-blue-500 pt-3 pb-3 hover:bg-blue-700 shadow-xl border border-blue-300 text-white py-2 rounded-lg font-semibold transition"
       >
-        Login
+        {isLoggingIn ? (
+          <span className='flex items-center justify-center gap-2'>
+                <Loader2 className='w-4 h-4 animate-spin'/>
+                  Login...
+           </span>
+        ) : ("Login")}
       </button>
 
     </form>
 
-    {/* Footer */}
     <p className="text-sm text-center text-gray-500 mt-4">
      Don’t have an account ?{" "}
-      <span className="text-blue-600 font-semibold cursor-pointer">
+      <span className="text-blue-500 font-semibold cursor-pointer">
         <Link to='/signup'>Sign up</Link>
       </span>
     </p>
